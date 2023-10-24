@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 06a2a4c49f397499ba5d6a1bc6765142
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - material: {instanceID: 0}
+  - papercupMaterial: {fileID: 2100000, guid: db39c016266b4447e82de62921b08597, type: 2}
+  - papercupShader: {fileID: 4800000, guid: 904241360cac647d9a17965c304d46d4, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
