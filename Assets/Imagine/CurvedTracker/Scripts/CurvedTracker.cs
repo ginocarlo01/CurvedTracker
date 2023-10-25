@@ -179,7 +179,7 @@ namespace Imagine.WebAR
             if (!targets.ContainsKey(id))
                 return;
 
-            targets[id].transform.gameObject.SetActive(false);
+            //targets[id].transform.gameObject.SetActive(false);
 
             var index = trackedIds.FindIndex(t => t == id);
             if (index > -1)
@@ -239,7 +239,7 @@ namespace Imagine.WebAR
             pos.y = float.Parse(values[2], System.Globalization.CultureInfo.InvariantCulture);
             pos.z = float.Parse(values[3], System.Globalization.CultureInfo.InvariantCulture);
 
-            var target = targets[id].transform;
+            /*var target = targets[id].transform;
 
             if (trackerOrigin == TrackerOrigin.CAMERA_ORIGIN)
             {
@@ -266,7 +266,7 @@ namespace Imagine.WebAR
                 }
 
 
-            }
+            }*/
 
         }
 
