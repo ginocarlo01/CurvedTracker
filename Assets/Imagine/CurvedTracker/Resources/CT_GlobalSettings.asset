@@ -20,24 +20,19 @@ MonoBehaviour:
     height: 1.7075475
   - id: puppies
     texture: {fileID: 2800000, guid: bca8eba2e34e1419995d26d15d0d1627, type: 3}
-    arc: 98
+    arc: 115
     radMul: 1
-    height: 1.7104228
+    height: 2.0071287
   - id: flower
     texture: {fileID: 2800000, guid: 1e3015bca21384d1ba4a9fbf8aa5efb5, type: 3}
     arc: 87
     radMul: 0.703
-    height: 2.0245821
-  - id: seashells
-    texture: {fileID: 2800000, guid: 95281aefd25e74242a3d6f8b93802bd1, type: 3}
-    arc: 221
-    radMul: 1
-    height: 1.78
+    height: 2.024582
   - id: Final
     texture: {fileID: 2800000, guid: 9c7ef8638434a784a96e5a37aa7f8f80, type: 3}
-    arc: 98
+    arc: 120
     radMul: 1
-    height: 0.90011084
+    height: 1
   defaultTrackerSettings:
     maxSimultaneousTargets: 1
     targetFrameRate: 30
