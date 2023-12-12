@@ -42,6 +42,22 @@ namespace Imagine.WebAR.Editor
             EditorGUI.indentLevel--;
             GUI.enabled = true;
             EditorGUILayout.EndVertical();
+
+            EditorGUILayout.Space(20);
+
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("dontDeactivateOnLost"));
+            
+            var useExtraSmoothingProp = serializedObject.FindProperty("useExtraSmoothing");
+            EditorGUILayout.PropertyField(useExtraSmoothingProp);
+            if(useExtraSmoothingProp.boolValue){
+                EditorGUI.indentLevel++;
+                EditorGUILayout.PropertyField(serializedObject.FindProperty("smoothenFactor"));
+                EditorGUI.indentLevel--;
+                if(serializedObject.FindProperty("trackerOrigin").intValue != 0){
+                    EditorGUILayout.HelpBox("Extra smoothing only works with CAMERA_ORIGIN", MessageType.Warning);
+                };
+            }
+
             EditorGUILayout.Space(20);
             EditorGUILayout.PropertyField(serializedObject.FindProperty("OnImageFound"));
             EditorGUILayout.PropertyField(serializedObject.FindProperty("OnImageLost"));

@@ -19,6 +19,8 @@ namespace Imagine.WebAR
         // [Range(1,360)] public float arc = 120;
         // public float radMul = 1;
         // public float height = 1;
+        [HideInInspector] public Vector3 targetPos;
+        [HideInInspector] public Quaternion targetRot;
     }
 
     public class CurvedTracker : MonoBehaviour
@@ -43,6 +45,9 @@ namespace Imagine.WebAR
 
         [SerializeField] private bool overrideTrackerSettings = false;
         [SerializeField] private TrackerSettings trackerSettings;
+        [SerializeField] private bool dontDeactivateOnLost = false;
+        [SerializeField] private bool useExtraSmoothing = false;
+        [SerializeField] [Range(1f, 20)] private float smoothenFactor = 10;
 
         [SerializeField] private UnityEvent<string> OnImageFound, OnImageLost;
 
@@ -51,6 +56,8 @@ namespace Imagine.WebAR
 
         IEnumerator Start()
         {
+            // System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("pt-BR");
+
             if(transform.parent != null) {
                 Debug.LogError("CurvedTracker should be a root transform to receive Javascript messages");
             }
@@ -71,6 +78,8 @@ namespace Imagine.WebAR
                 {
                     serializedIds += ",";
                 }
+
+                Debug.Log("arc=" + (i.transform.GetComponent<CurvedPlane>().arc).ToString());
             }
             Debug.Log(serializedIds);
 
@@ -164,6 +173,11 @@ namespace Imagine.WebAR
             if (!targets.ContainsKey(id))
                 return;
 
+
+            for (int i = 0; i < curvedTargets.Count; i++){
+                curvedTargets[i].transform.gameObject.SetActive(false);
+            }
+
             targets[id].transform.gameObject.SetActive(true);
             
             if(!trackedIds.Contains(id))
@@ -179,7 +193,7 @@ namespace Imagine.WebAR
             if (!targets.ContainsKey(id))
                 return;
 
-            //targets[id].transform.gameObject.SetActive(false);
+            targets[id].transform.gameObject.SetActive(false || dontDeactivateOnLost);
 
             var index = trackedIds.FindIndex(t => t == id);
             if (index > -1)
@@ -239,12 +253,18 @@ namespace Imagine.WebAR
             pos.y = float.Parse(values[2], System.Globalization.CultureInfo.InvariantCulture);
             pos.z = float.Parse(values[3], System.Globalization.CultureInfo.InvariantCulture);
 
-            /*var target = targets[id].transform;
+            var target = targets[id].transform;
 
             if (trackerOrigin == TrackerOrigin.CAMERA_ORIGIN)
             {
-                target.position = pos;
-                target.rotation = rot;
+                if(!useExtraSmoothing){
+                    target.position = pos;
+                    target.rotation = rot;
+                }
+                else{
+                    targets[id].targetPos = pos;
+                    targets[id].targetRot = rot;
+                }
             }
 
             else if (trackerOrigin == TrackerOrigin.FIRST_TARGET_ORIGIN)
@@ -266,7 +286,7 @@ namespace Imagine.WebAR
                 }
 
 
-            }*/
+            }
 
         }
 
@@ -281,6 +301,15 @@ namespace Imagine.WebAR
         private int debugImageTargetIndex = 0;
         private void Update()
         {
+            if(useExtraSmoothing){
+                foreach(var target in curvedTargets){
+                    if(target.transform.gameObject.activeSelf){
+                        target.transform.position = Vector3.Lerp(target.transform.position, target.targetPos, Time.deltaTime * smoothenFactor);
+                        target.transform.rotation = Quaternion.Slerp(target.transform.rotation, target.targetRot, Time.deltaTime * smoothenFactor);
+                    }
+                }
+            }
+
             if (trackerSettings.debugMode)
             {
                 if (Input.GetKeyDown(KeyCode.I))

@@ -14,7 +14,7 @@ mergeInto(LibraryManager.library, {
     },
     SetWebGLTrackerSettings: function(settings)
 	{
-    	window.cTracker.setTrackerSettings(UTF8ToString(settings), "1.0.1.629756");
+    	window.cTracker.setTrackerSettings(UTF8ToString(settings), "1.0.2.125409");
     },
     GetTrackerFov: function()
     {

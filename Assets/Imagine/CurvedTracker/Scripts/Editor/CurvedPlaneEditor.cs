@@ -41,6 +41,13 @@ namespace Imagine.WebAR.Editor{
             // else{
             //     _target.height = EditorGUILayout.FloatField("Height", _target.height);
             // }
+
+            if(EditorUtility.IsPersistent(_target)){
+                //don't generate mesh for prefab files
+                //we only do this for scene objects
+                return;
+            }
+
             if(EditorGUI.EndChangeCheck()){
                 _target.GenerateCylinderMesh();
                 EditorUtility.SetDirty(_target);

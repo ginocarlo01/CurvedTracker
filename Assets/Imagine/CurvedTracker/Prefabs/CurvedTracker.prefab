@@ -48,7 +48,7 @@ MonoBehaviour:
   curvedTargets: []
   trackerOrigin: 0
   trackedIds: []
-  overrideTrackerSettings: 0
+  overrideTrackerSettings: 1
   trackerSettings:
     maxSimultaneousTargets: 1
     targetFrameRate: 30
@@ -58,6 +58,9 @@ MonoBehaviour:
       trackedPoints: 25
       detectInterval: 200
     debugMode: 0
+  dontDeactivateOnLost: 0
+  useExtraSmoothing: 1
+  smoothenFactor: 10
   OnImageFound:
     m_PersistentCalls:
       m_Calls: []
